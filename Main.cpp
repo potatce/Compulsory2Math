@@ -2,7 +2,6 @@
 #include "Matrix.h"
 
 int main() {
-	std::cout << "hello matrix" << std::endl;
 
 	Matrix m1(3, 3);
 	m1.read();
