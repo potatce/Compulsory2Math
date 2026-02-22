@@ -1,6 +1,6 @@
 #pragma once
 
-class Vector3D {
+/*class Vector3D {
 
 public:
     Vector3D();
@@ -13,20 +13,22 @@ private:
     int m;
     int n;
     int o;
-};
+};*/
 
 class Matrix
 {
 public:
     Matrix();
     Matrix(int _m, int _n);
+
     void read();
     void print();
     Matrix multiply(Matrix other);
     Matrix transpose();
     double determinant();
+    Matrix cofactor();
     Matrix inverse();
-    Vector3D multiply(Vector3D v);
+    //Vector3D multiply(Vector3D v);
 private:
     static const int M = 10;
     static const int N = 10;

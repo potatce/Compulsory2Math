@@ -1,5 +1,6 @@
 #include "Matrix.h"
-#include <iostream	>
+#include <iostream>
+#include <list>
 
 Matrix::Matrix()
 {
@@ -97,7 +98,7 @@ Matrix Matrix::transpose()
 double Matrix::determinant()
 {
 	//Only works with 3x3 matrix
-	if ((m != 3) && (n != 3)) {
+	if ((m != 3) || (n != 3)) {
 		std::cout << "Please only run this with a 3x3 matrix.\n";
 		return 0;
 	}
@@ -107,12 +108,75 @@ double Matrix::determinant()
 		+ A[0][2] * (A[1][0] * A[2][1] - A[1][1] * A[2][0]);
 }
 
-Matrix Matrix::inverse()
-{
-	return Matrix();
+Matrix Matrix::cofactor() {
+//only works for 3x3 matrix
+
+	std::list<double> row1;
+	std::list<double> row2;
+
+	Matrix result(n, m);
+	
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+
+			//looping through the matrix
+			for (int k = 0; k < n; k++) {
+				for (int l = 0; l < m; l++) {
+					
+					//check if he col or row are the same as the C. Adding to list.
+					if ((k != i) && (l != j)) {
+
+						if (row1.size() < n - 1) row1.push_back(A[k][l]);
+						else if (row2.size() < m - 1) row2.push_back(A[k][l]);
+					}
+				}
+			}
+
+			result.A[i][j] = - ((row1.front() * row2.back()) - (row1.back() * row2.front()));
+			
+			/*check if the lists are correct
+			for (double element : row1) { std::cout << element << " "; }
+			std::cout << "\n";
+			for (double element : row2) { std::cout << element << " "; }
+			std::cout << "\n";
+			std::cout << "\n";*/
+
+
+
+			row1.clear();
+			row2.clear();
+		}
+	}
+
+	return result;
 }
 
-Vector3D Matrix::multiply(Vector3D v)
+Matrix Matrix::inverse()
+{
+	if (determinant() == 0) {
+		std::cout << "Matrix does not have an inverse";
+		return Matrix();
+	}
+
+	//Only works with 3x3 matrix
+	if ((m != 3) || (n != 3)) {
+		std::cout << "Please only run this with a 3x3 matrix.\n";
+		return Matrix();
+	}
+
+	Matrix result = cofactor().transpose();
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+
+			result.A[i][j] /= determinant();
+		}
+	}
+
+	return result;
+}
+
+/*Vector3D Matrix::multiply(Vector3D v)
 {
 	return Vector3D();
-}
+}*/
