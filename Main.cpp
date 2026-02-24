@@ -6,9 +6,18 @@ int main() {
 	Matrix m1(3, 3);
 	m1.read();
 	m1.print();
-	//m1.transpose().print();
 
-/*	Matrix m2(3, 3);
+	std::cout << m1.vectorMultiply(Vector3D(1, 2, 3)).x << "\n";
+	std::cout << m1.vectorMultiply(Vector3D(1, 2, 3)).y << "\n";
+	std::cout << m1.vectorMultiply(Vector3D(1, 2, 3)).z << "\n";
+
+/*
+	m1.inverse().print();
+
+	std::cout <<"Determinant: " << m1.determinant();
+	m1.transpose().print();
+
+	Matrix m2(3, 3);
 	m2.read();
 	m2.print();
 
@@ -21,10 +30,6 @@ int main() {
 
 	multiM2.transpose().print();
 
-
-
-	std::cout <<"Determinant: " << m1.determinant();
 */
-	m1.inverse().print();
 	return 0;
 }

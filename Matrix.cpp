@@ -1,4 +1,5 @@
 #include "Matrix.h"
+
 #include <iostream>
 #include <list>
 
@@ -24,6 +25,7 @@ Matrix::Matrix(int _m, int _n) : m(_m), n(_n)
 		}
 	}
 }
+
 
 void Matrix::read()
 {
@@ -53,7 +55,7 @@ void Matrix::print()
 Matrix Matrix::multiply(Matrix other) {
 
 	//Multiplication is defined if A has dimension m x n and B has dimension n x m.
-	if ((m != other.n) || (n != other.m)) {
+	if ((n != other.m)) {
 		std::cout << "Multiplication not defined\n";
 		return Matrix();
 	}
@@ -176,7 +178,43 @@ Matrix Matrix::inverse()
 	return result;
 }
 
-/*Vector3D Matrix::multiply(Vector3D v)
+
+
+Vector3D Matrix::vectorMultiply(Vector3D v)
 {
-	return Vector3D();
-}*/
+	if (m != 3) {
+		std::cout << "Only multiply 3D vectors with a matrix that has as many columns as indexes in the vector.\n";
+		return Vector3D();
+	}
+
+	Matrix vector3Matrix(3, 1);
+	vector3Matrix.A[0][0] = v.x;
+	vector3Matrix.A[1][0] = v.y;
+	vector3Matrix.A[2][0] = v.z;
+
+	vector3Matrix =  multiply(vector3Matrix);
+
+	Vector3D result;
+	result.x = vector3Matrix.A[0][0];
+	result.y = vector3Matrix.A[1][0];
+	result.z = vector3Matrix.A[2][0];
+
+	return result;
+}
+
+Vector3D::Vector3D() {
+
+	x = 0;
+	y = 0;
+	z = 0;
+
+}
+
+Vector3D::Vector3D(double _x, double _y, double _z) {
+
+	x = _x;
+	y = _y;
+	z = _z;
+
+}
+
